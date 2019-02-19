@@ -1,6 +1,6 @@
-package com.example.ezcount.DAOs;
+package com.example.izicount.DAOs;
 
-import com.example.ezcount.tables.Transport;
+import com.example.izicount.tables.Transport;
 
 import java.util.List;
 

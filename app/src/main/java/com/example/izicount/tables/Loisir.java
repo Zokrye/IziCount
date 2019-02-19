@@ -1,4 +1,4 @@
-package com.example.ezcount.tables;
+package com.example.izicount.tables;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;

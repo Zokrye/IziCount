@@ -1,9 +1,8 @@
-package com.example.ezcount.DAOs;
+package com.example.izicount.DAOs;
 
-import com.example.ezcount.tables.Autre;
+import com.example.izicount.tables.Autre;
 
 import java.util.List;
-
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Query;

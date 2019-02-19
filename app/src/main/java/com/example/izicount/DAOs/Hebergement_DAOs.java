@@ -1,6 +1,6 @@
-package com.example.ezcount.DAOs;
+package com.example.izicount.DAOs;
 
-import com.example.ezcount.tables.Hebergement;
+import com.example.izicount.tables.Hebergement;
 import java.util.List;
 
 import androidx.room.Dao;
