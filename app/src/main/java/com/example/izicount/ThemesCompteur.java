@@ -41,4 +41,11 @@ public class ThemesCompteur extends Activity {
             }
         });
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(ThemesCompteur.this,MainActivity.class);
+        startActivity(intent);
+    }
 }

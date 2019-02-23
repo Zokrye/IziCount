@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent" android:layout_height="match_parent" android:padding="10dp" >
+
+    <ImageView
+        android:id="@+id/sync"
+        android:layout_width="29dp"
+        android:layout_height="25dp"
+        android:layout_below="@+id/weather"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginStart="97dp"
+        android:layout_marginLeft="97dp"
+        android:layout_marginTop="9dp"
+        app:srcCompat="@drawable/sync" />
+
+    <ImageView
+        android:id="@+id/delete"
+        android:layout_width="22dp"
+        android:layout_height="19dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginRight="0dp"
+        app:srcCompat="@drawable/delete" />
+
+    <TextView
+        android:id="@+id/place"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="13dp"
+        android:layout_marginLeft="13dp"
+        android:layout_toEndOf="@+id/image_weather"
+        android:layout_toRightOf="@+id/image_weather"
+        android:text="City, Country" />
+
+    <ImageView
+        android:id="@+id/image_weather"
+        android:layout_width="75dp"
+        android:layout_height="71dp"
+        tools:background="#AAA" />
+
+    <TextView
+        android:id="@+id/weather"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/place"
+        android:layout_marginStart="12dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="15dp"
+        android:layout_toEndOf="@+id/image_weather"
+        android:layout_toRightOf="@+id/image_weather"
+        android:text="Weather, temp" />
+
+</RelativeLayout>

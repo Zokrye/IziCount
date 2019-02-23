@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">iZiCount</string>
+    <string name="API_URL">http://api.openweathermap.org/data/2.5/weather?</string>
+    <string name="API_KEY">4317248e9e674fa7a416ecc8afe7acaa</string>
 </resources>
