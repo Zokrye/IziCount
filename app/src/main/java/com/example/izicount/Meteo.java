@@ -1,7 +1,7 @@
 package com.example.izicount;
+import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -36,7 +36,7 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 
-public class Meteo extends Activity {
+public class Meteo extends AppCompatActivity {
     EditText cityText;
     TextView responseView;
     //ProgressBar progressBar;

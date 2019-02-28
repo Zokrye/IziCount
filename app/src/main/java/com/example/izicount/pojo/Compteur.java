@@ -1,16 +1,33 @@
 package com.example.izicount.pojo;
 
 public class Compteur {
-    public String nom;
-    public int nombre;
+
+    private String nom;
+
+    private int nombre;
+
     public Compteur(){
-        nombre=0;
+        setNombre(0);
     }
+
     public Compteur(String name){
-        nom=name;
-        nombre=0;
+        setNom(name);
+        setNombre(0);
     }
-    public int getNombre(){
+    public Compteur(int nombre,String name){
+        this.setNombre(new Integer(nombre));
+        this.setNom(new String(name));
+    }
+    public String getNom() {
+        return nom;
+    }
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+    public int getNombre() {
         return nombre;
+    }
+    public void setNombre(int nombre) {
+        this.nombre = nombre;
     }
 }

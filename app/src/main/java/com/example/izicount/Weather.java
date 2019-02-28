@@ -9,7 +9,6 @@ public class Weather {
         this.place = place;
         this.weather = weather;
         this.icon=icon;
-
     }
 
     public String getIcon() {
