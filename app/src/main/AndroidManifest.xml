@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.izicount">
-
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_GPS" />
+    <uses-permission android:name="android.permission.ACCESS_LOCATION" />
     <application
+        android:usesCleartextTraffic="true"
         android:allowBackup="true"
+        android:name=".IziCountApplication"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
@@ -17,7 +23,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".ThemesCompteur"/>
-        <activity android:name=".Meteo"/>
+        <activity android:name=".CompteursActivity"/>
+        <activity android:name=".Meteo" android:configChanges="orientation|screenSize|keyboard"/>
+
+
     </application>
 
 </manifest>
