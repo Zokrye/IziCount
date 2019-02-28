@@ -47,7 +47,7 @@ public class CompteursActivity extends AppCompatActivity implements CompteurList
     @Override
     public void onPlus(Compteur compteur) {
         Log.d("Activity compteur","Plus");
-        compteur.setNombre(compteur.getNombre()+1);
+        compteur.increment();
         Log.d("Activity compteur",String.valueOf(compteur.getNombre()));
     }
 
@@ -55,7 +55,7 @@ public class CompteursActivity extends AppCompatActivity implements CompteurList
     public void onMoins(Compteur compteur) {
         Log.d("Activity compteur","Moins");
         if(compteur.getNombre()>0)
-            compteur.setNombre(compteur.getNombre()-1);
+            compteur.decrement();
         else
             Toast.makeText(this,"Can't go under 0",Toast.LENGTH_LONG).show();
         Log.d("Activity compteur",String.valueOf(compteur.getNombre()));

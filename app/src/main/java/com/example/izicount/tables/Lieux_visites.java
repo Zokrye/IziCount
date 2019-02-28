@@ -1,19 +1,31 @@
 package com.example.izicount.tables;
 
-import androidx.room.ColumnInfo;
+import com.example.izicount.pojo.Comptable;
+import com.example.izicount.pojo.Compteur;
+
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "Lieux visités")
-public class Lieux_visites {
+public class Lieux_visites extends Comptable {
     @PrimaryKey
     private int lieux_id;
 
-    @ColumnInfo(name = "type_lieux")
-    private String type_lieux;
+    public Lieux_visites(){
+        super();
+        this.setLieux_id(2);
+    }
 
-    @ColumnInfo(name = "lieux_occurence")
-    private int lieux_occurence;
+    public Lieux_visites(String type_hebergement,String nom_compteur,int id){
+        super(type_hebergement,nom_compteur);
+        this.setLieux_id(id);
+    }
+
+    public Lieux_visites(String type, Compteur compteur, int id){
+        super(type,compteur);
+        this.setLieux_id(id);
+    }
+
 
     public int getLieux_id() {
         return lieux_id;
@@ -21,29 +33,5 @@ public class Lieux_visites {
 
     public void setLieux_id(int lieux_id) {
         this.lieux_id = lieux_id;
-    }
-
-    public String getType_lieux() {
-        return type_lieux;
-    }
-
-    public void setType_lieux(String type_lieux) {
-        this.type_lieux = type_lieux;
-    }
-
-    public int getLieux_occurence() {
-        return lieux_occurence;
-    }
-
-    public void setLieux_occurence(int lieux_occurence) {
-        this.lieux_occurence = lieux_occurence;
-    }
-
-    public void inc_lieux_visites_occurences(){
-        this.lieux_occurence++;
-    }
-
-    public void dec_lieux_visites_occurences(){
-        this.lieux_occurence--;
     }
 }

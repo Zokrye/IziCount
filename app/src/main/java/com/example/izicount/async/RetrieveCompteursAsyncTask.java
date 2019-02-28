@@ -34,8 +34,8 @@ public class RetrieveCompteursAsyncTask extends AsyncTask<String,Void, List<Comp
             compteurs.add(compteur);
         }
         //BDD ajout de la liste compteur
-        int i=1;
-        /*while(i<getSizeTable()){
+        /*int i=1;
+        while(i<getSizeTable()){
             final Compteur compteur = new Compteur();
             compteur.nom="Get id pour le nom";
             compteur.nombre=1;
