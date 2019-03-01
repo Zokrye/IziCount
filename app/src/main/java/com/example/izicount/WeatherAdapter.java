@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.example.izicount.tables.Weather;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -70,7 +71,7 @@ public class WeatherAdapter extends ArrayAdapter<Weather> {
             @Override
             public void onClick(View view) {
                 //Your Toast message
-
+                new DeleteWeather().execute(weather.getPlace());
                 //weathers.remove(position);
                 remove(weather);
             }
@@ -78,7 +79,9 @@ public class WeatherAdapter extends ArrayAdapter<Weather> {
         viewHolder.sync.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 remove(weather);
+
                 new UpdateWeather(position).execute(weather.getPlace());
 
 
@@ -86,20 +89,41 @@ public class WeatherAdapter extends ArrayAdapter<Weather> {
         }) ;
         return convertView;
     }
+    class DeleteWeather extends AsyncTask<String, Void, Void> {
 
-    class UpdateWeather extends AsyncTask<String, Void, String> {
-        public UpdateWeather(int position) {
-            this.position=position;
-        }
-        private Exception exception;
-        private int position;
+
         protected void onPreExecute() {
             //progressBar.setVisibility(View.VISIBLE);
             //responseView.setText("");
         }
 
-        protected String doInBackground(String... place) {
+        protected Void doInBackground(String... place) {
             String city = place[0];
+            DatabaseHelper.getInstance().getMeteoDAO().DeleteWeather(city);
+            return null;
+        }
+
+        protected void onPostExecute() {
+
+
+        }
+    }
+    class UpdateWeather extends AsyncTask<String, Void, Weather> {
+        public UpdateWeather(int position) {
+            this.position = position;
+        }
+
+        private Exception exception;
+        private int position;
+
+        protected void onPreExecute() {
+            //progressBar.setVisibility(View.VISIBLE);
+            //responseView.setText("");
+        }
+
+        protected Weather doInBackground(String... place) {
+            String city = place[0];
+            String response = null;
             // Do some validation here
 
             try {
@@ -113,49 +137,51 @@ public class WeatherAdapter extends ArrayAdapter<Weather> {
                         stringBuilder.append(line).append("\n");
                     }
                     bufferedReader.close();
-                    return stringBuilder.toString();
-                }
-                finally{
+                    response = stringBuilder.toString();
+                } finally {
                     urlConnection.disconnect();
                 }
-            }
-            catch(Exception e) {
+            } catch (Exception e) {
                 Log.e("ERROR", e.getMessage(), e);
-                return null;
             }
-        }
 
-        protected void onPostExecute(String response) {
-            if(response == null) {
+            if (response == null) {
                 response = "THERE WAS AN ERROR";
             }
-            JSONParser parser=new JSONParser();
+            JSONParser parser = new JSONParser();
+            Weather new_weather=null;
             try {
                 JSONObject json = (JSONObject) parser.parse(response);
-                String icon=((JSONObject)((JSONArray) json.get("weather")).get(0)).get("icon").toString();
-                String city=json.get("name").toString();
-                String country=((JSONObject) json.get("sys")).get("country").toString();
-                String weather=((JSONObject)((JSONArray) json.get("weather")).get(0)).get("main").toString();
-                String tempk=((JSONObject) json.get("main")).get("temp").toString();
-                String tempc=new DecimalFormat("#.0").format(Double.parseDouble(tempk)- 273.15);
-
+                String icon = ((JSONObject) ((JSONArray) json.get("weather")).get(0)).get("icon").toString();
+                city = json.get("name").toString();
+                String country = ((JSONObject) json.get("sys")).get("country").toString();
+                String weather = ((JSONObject) ((JSONArray) json.get("weather")).get(0)).get("main").toString();
+                String tempk = ((JSONObject) json.get("main")).get("temp").toString();
+                String tempc = new DecimalFormat("#.0").format(Double.parseDouble(tempk) - 273.15);
+                new_weather= new Weather(city + "," + country, weather + "," + tempc + "°C", icon);
 
                 Log.d("tag", icon);
+                DatabaseHelper.getInstance().getMeteoDAO().UpdateWeather(city + "," + country, weather + "," + tempc + "°C", icon);
 
-                insert(new Weather(city+","+country,weather+","+tempc+"°C",icon),position);
+                //new Meteo.LoadWeathers().execute();
 
 
-            }
-            catch(ParseException e) {
+            } catch (ParseException e) {
                 Log.e("MYAPP", "JSONparse exception", e);
 
             }
             //progressBar.setVisibility(View.GONE);
             Log.i("INFO", response);
             //responseView.setText(response);
+            return new_weather;
+        }
+
+        protected void onPostExecute(Weather new_weather) {
+            if (new_weather != null) {
+                insert(new Weather(new_weather.getPlace(), new_weather.getWeather(), new_weather.getIcon()), position);
+            }
         }
     }
-
     public class WeatherViewHolder {
 
         public TextView place;

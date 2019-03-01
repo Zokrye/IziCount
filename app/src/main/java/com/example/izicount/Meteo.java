@@ -21,14 +21,19 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.izicount.tables.Weather;
+
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -55,8 +60,10 @@ public class Meteo extends Activity {
 
         mListView = (ListView) findViewById(R.id.listview);
 
+        //weathers=DatabaseHelper.getInstance().getMeteoDAO().loadWeather();
         //weathers.add(new Weather("Paris,FR", "Nuageux","01d"));
         adapter = new WeatherAdapter(Meteo.this, weathers);
+        new LoadWeathers().execute();
         mListView.setAdapter(adapter);
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         locationListener = new LocationListener() {
@@ -64,6 +71,7 @@ public class Meteo extends Activity {
             public void onLocationChanged(Location location) {
                 Log.v("app", "IN ON LOCATION CHANGE)");
                     if(location!=null) {
+                        locationManager.removeUpdates(this);
                         Toast.makeText(Meteo.this, location.getLatitude() + " " + location.getLongitude(), Toast.LENGTH_LONG).show();
                         Log.d("app",location.getLatitude() + " " + location.getLongitude());
                         new RetrieveWeatherByCoordinates().execute(location.getLongitude(),location.getLatitude());
@@ -114,15 +122,11 @@ public class Meteo extends Activity {
                 return false;
             }
         });
-        cityText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                cityText.selectAll();
-            }
-        });
+
         locationImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 RequestPermissions();
 
             }
@@ -179,6 +183,7 @@ public class Meteo extends Activity {
 
         protected String doInBackground(Void... urls) {
             String city = cityText.getText().toString();
+            String response=null;
             // Do some validation here
 
             try {
@@ -192,27 +197,25 @@ public class Meteo extends Activity {
                         stringBuilder.append(line).append("\n");
                     }
                     bufferedReader.close();
-                    return stringBuilder.toString();
+                    response= stringBuilder.toString();
+                }
+                catch(FileNotFoundException e) {
+                    Log.e("ERROR", e.getMessage(), e);
                 }
                 finally{
                     urlConnection.disconnect();
                 }
             }
-            catch(Exception e) {
+            catch(IOException e) {
                 Log.e("ERROR", e.getMessage(), e);
-                return null;
-            }
-        }
 
-        protected void onPostExecute(String response) {
-            if(response == null) {
-                response = "THERE WAS AN ERROR";
             }
+
             JSONParser parser=new JSONParser();
             try {
                 JSONObject json = (JSONObject) parser.parse(response);
                 String icon=((JSONObject)((JSONArray) json.get("weather")).get(0)).get("icon").toString();
-                String city=json.get("name").toString();
+                city=json.get("name").toString();
                 String country=((JSONObject) json.get("sys")).get("country").toString();
                 String weather=((JSONObject)((JSONArray) json.get("weather")).get(0)).get("main").toString();
                 String tempk=((JSONObject) json.get("main")).get("temp").toString();
@@ -220,7 +223,10 @@ public class Meteo extends Activity {
 
 
                 Log.d("tag", icon);
-                adapter.add(new Weather(city+","+country,weather+","+tempc+"°C",icon));
+                Weather meteo=new Weather(city+","+country,weather+","+tempc+"°C",icon);
+                //adapter.add(meteo);
+                DatabaseHelper.getInstance().getMeteoDAO().AddWeather(meteo);
+
 
 
             }
@@ -228,9 +234,21 @@ public class Meteo extends Activity {
                 Log.e("MYAPP", "JSONparse exception", e);
 
             }
+            catch(Exception e) {
+                Log.e("MYAPP", "Exception", e);
+            }
             //progressBar.setVisibility(View.GONE);
-            Log.i("INFO", response);
-            responseView.setText("Found");
+            //responseView.setText("Found");
+            return response;
+        }
+
+        protected void onPostExecute(String response) {
+            if(response!=null) {
+                new LoadWeathers().execute();
+            }
+            else {
+                Toast.makeText(Meteo.this, "La ville que vous recherchez n'a pas été trouvée. Merci de réessayer", Toast.LENGTH_SHORT);
+            }
         }
     }
 
@@ -245,11 +263,12 @@ public class Meteo extends Activity {
 
         protected String doInBackground(Double... coordinates) {
             String city = cityText.getText().toString();
-            Double longitude=coordinates[0];
-            Double latitude=coordinates[1];
+            String response = null;
+            Double longitude = coordinates[0];
+            Double latitude = coordinates[1];
 
             try {
-                URL url = new URL(getString(R.string.API_URL) + "lat="+latitude+"&lon="+longitude+ "&appid=" + getString(R.string.API_KEY));
+                URL url = new URL(getString(R.string.API_URL) + "lat=" + latitude + "&lon=" + longitude + "&appid=" + getString(R.string.API_KEY));
                 HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
                 try {
                     BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
@@ -259,54 +278,71 @@ public class Meteo extends Activity {
                         stringBuilder.append(line).append("\n");
                     }
                     bufferedReader.close();
-                    return stringBuilder.toString();
-                }
-                finally{
+                    response=stringBuilder.toString();
+                } finally {
                     urlConnection.disconnect();
                 }
-            }
-            catch(Exception e) {
+            } catch (Exception e) {
                 Log.e("ERROR", e.getMessage(), e);
-                return null;
-            }
-        }
 
-        protected void onPostExecute(String response) {
-            if(response == null) {
+            }
+
+            if (response == null) {
                 response = "THERE WAS AN ERROR";
             }
-            JSONParser parser=new JSONParser();
+            JSONParser parser = new JSONParser();
             try {
                 JSONObject json = (JSONObject) parser.parse(response);
-                String icon=((JSONObject)((JSONArray) json.get("weather")).get(0)).get("icon").toString();
-                String city=json.get("name").toString();
-                String country=((JSONObject) json.get("sys")).get("country").toString();
-                String weather=((JSONObject)((JSONArray) json.get("weather")).get(0)).get("main").toString();
-                String tempk=((JSONObject) json.get("main")).get("temp").toString();
-                String tempc=new DecimalFormat("#.0").format(Double.parseDouble(tempk)- 273.15);
+                String icon = ((JSONObject) ((JSONArray) json.get("weather")).get(0)).get("icon").toString();
+                city = json.get("name").toString();
+                String country = ((JSONObject) json.get("sys")).get("country").toString();
+                String weather = ((JSONObject) ((JSONArray) json.get("weather")).get(0)).get("main").toString();
+                String tempk = ((JSONObject) json.get("main")).get("temp").toString();
+                String tempc = new DecimalFormat("#.0").format(Double.parseDouble(tempk) - 273.15);
                 Log.d("tag", icon);
-                adapter.add(new Weather(city+","+country,weather+","+tempc+"°C",icon));
+                Weather meteo = new Weather(city + "," + country, weather + "," + tempc + "°C", icon);
+                DatabaseHelper.getInstance().getMeteoDAO().AddWeather(meteo);
 
 
-            }
-            catch(ParseException e) {
+            } catch (ParseException e) {
                 Log.e("MYAPP", "JSONparse exception", e);
 
             }
+            return null;
+        }
 
-            /*try {
-                URL url = new URL("http://openweathermap.org/img/w/10d.png");
-                Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-                ImageView weatherimage = (ImageView) findViewById(R.id.imageView2);
-                weatherimage.setImageBitmap(bmp);
-            }
-            catch(Exception e) {
-                Log.e("MYAPP", "URL or bitmap exception", e);
-            }
-*/
-            Log.i("INFO", response);
+        protected void onPostExecute(String response) {
+
+            new LoadWeathers().execute();
             responseView.setText("Found");
             //progressBar.setVisibility(View.GONE);
         }
     }
+    class LoadWeathers extends AsyncTask<Void, Void, List<Weather>> {
+
+        private Exception exception;
+
+        protected void onPreExecute() {
+            //progressBar.setVisibility(View.VISIBLE);
+            //responseView.setText("");
+        }
+
+        protected List<Weather> doInBackground(Void... param) {
+
+            //DatabaseHelper.getInstance().getMeteoDAO().AddWeather(new Weather("Paris,FR", "Nuageux","01d"));
+            weathers=DatabaseHelper.getInstance().getMeteoDAO().loadWeather();
+
+            //mListView.setAdapter(adapter);
+            return weathers;
+        }
+
+        protected void onPostExecute(List<Weather> weathers) {
+            adapter.clear();
+            adapter.addAll(weathers);
+
+        }
+
+    }
 }
+
+

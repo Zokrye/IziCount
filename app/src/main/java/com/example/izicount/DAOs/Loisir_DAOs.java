@@ -4,9 +4,10 @@ import com.example.izicount.tables.Loisir;
 
 import java.util.List;
 
+import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Query;
-
+@Dao
 public interface Loisir_DAOs {
     @Query("SELECT * FROM Loisir ")//Renvoie une liste de Loisir (toutes les entrées dans la BDD)
     List<Loisir> getAll();

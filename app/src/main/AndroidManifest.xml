@@ -24,7 +24,9 @@
         </activity>
         <activity android:name=".ThemesCompteur"/>
         <activity android:name=".CompteursActivity"/>
-        <activity android:name=".Meteo" android:configChanges="orientation|screenSize|keyboard"/>
+        <activity android:name=".Meteo"
+            android:configChanges="orientation|screenSize|keyboard"
+            android:windowSoftInputMode="stateHidden"/>
 
 
     </application>
