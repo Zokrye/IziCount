@@ -1,15 +1,13 @@
 package com.example.izicount;
 
-import android.app.Activity;
-import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-public class ThemesCompteur extends Activity {
+import androidx.appcompat.app.AppCompatActivity;
 
-    FragmentManager ft =getFragmentManager();
+public class ThemesCompteur extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

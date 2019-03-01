@@ -1,4 +1,5 @@
 package com.example.izicount;
+import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
 import android.app.Activity;

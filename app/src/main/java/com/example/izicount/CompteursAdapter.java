@@ -59,7 +59,7 @@ public class CompteursAdapter extends BaseAdapter implements View.OnClickListene
 
         final Compteur compteur = (Compteur) getItem(position);
         if(compteur!=null) {
-            holder.name.setText(compteur.nom);
+            holder.name.setText(compteur.getNom());
             holder.name.setTag(position);
             holder.name.setOnClickListener(this);
             holder.count.setText(String.valueOf(compteur.getNombre()));
@@ -98,7 +98,7 @@ public class CompteursAdapter extends BaseAdapter implements View.OnClickListene
         int position = (Integer) v.getTag();
         if(null != mListener){
             final Compteur compteur = (Compteur) getItem(position);
-            Log.d("Clicked Button", compteur.nom);
+            Log.d("Clicked Button", compteur.getNom());
             //mListener.onRetweet(tweet);
             //mListener.onViewTweet(tweet);
         }

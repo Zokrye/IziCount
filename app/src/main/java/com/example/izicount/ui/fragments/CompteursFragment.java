@@ -1,6 +1,7 @@
 package com.example.izicount.ui.fragments;
 
-import android.app.Activity;
+import androidx.fragment.app.Fragment;
+
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,15 +19,7 @@ import com.example.izicount.interfaces.CompteursLoad;
 import com.example.izicount.pojo.Compteur;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
-
-import android.app.Fragment;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 public class CompteursFragment extends Fragment implements CompteursLoad {
 
@@ -64,8 +57,9 @@ public class CompteursFragment extends Fragment implements CompteursLoad {
     public void onStart() {
         super.onStart();
         task = new RetrieveCompteursAsyncTask(this);
-        if(mTheme!=null)
+        if(mTheme!=null) {
             task.execute(mTheme);
+        }
         //aller chercher les compteurs dans la bdd à afficher pour le thème choisi
     }
 
@@ -76,7 +70,7 @@ public class CompteursFragment extends Fragment implements CompteursLoad {
     }
 
     @Override
-    public void onAttach(Activity activity) {
+    public void onAttach(Context activity) {
         super.onAttach(activity);
         Log.w("TweetListener", "onAttach called");
         if (activity instanceof CompteurListener){

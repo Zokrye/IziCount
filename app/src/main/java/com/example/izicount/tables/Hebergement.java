@@ -1,20 +1,32 @@
 package com.example.izicount.tables;
 
+import com.example.izicount.pojo.Comptable;
+import com.example.izicount.pojo.Compteur;
+
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "Hebergement")
-public class Hebergement {
+public class Hebergement extends Comptable {
     @PrimaryKey
+    @ColumnInfo(name = "hebergement_id")
     private int hebergement_id;//Id différent pour chaque type d'hébergement
 
-    @ColumnInfo(name = "type_hebergement")
-    private String type;
+    public Hebergement(){
+        super();
+        this.setHebergement_id(1);
+    }
 
-    @ColumnInfo(name = "hebergement_occurence")
-    private int herbergement_occurence;
+    public Hebergement(String type_hebergement,String nom_compteur,int id){
+        super(type_hebergement,nom_compteur);
+        this.setHebergement_id(id);
+    }
 
+    public Hebergement(String type,Compteur compteur,int id){
+        super(type,compteur);
+        this.setHebergement_id(id);
+    }
 
     public int getHebergement_id() {
         return hebergement_id;
@@ -24,27 +36,5 @@ public class Hebergement {
         this.hebergement_id = hebergement_id;
     }
 
-    public String getType() {
-        return type;
-    }
 
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public int getHerbergement_occurence() {
-        return herbergement_occurence;
-    }
-
-    public void setHerbergement_occurence(int herbergement_occurence) {
-        this.herbergement_occurence = herbergement_occurence;
-    }
-
-    public void inc_hebergement_occurences(){
-        this.herbergement_occurence++;
-    }
-
-    public void dec_hebergement_occurences(){
-        this.herbergement_occurence--;
-    }
 }

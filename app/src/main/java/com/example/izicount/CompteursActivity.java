@@ -1,6 +1,7 @@
 package com.example.izicount;
 
-import android.app.Activity;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -8,16 +9,13 @@ import com.example.izicount.interfaces.CompteurListener;
 import com.example.izicount.pojo.Compteur;
 import com.example.izicount.ui.fragments.CompteursFragment;
 
-import androidx.annotation.Nullable;
-import android.app.FragmentManager;
-import android.telephony.mbms.MbmsErrors;
 import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class CompteursActivity extends Activity implements CompteurListener {
+public class CompteursActivity extends AppCompatActivity implements CompteurListener {
 
-    FragmentManager ft = getFragmentManager();
+    FragmentManager ft = getSupportFragmentManager();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,17 +47,17 @@ public class CompteursActivity extends Activity implements CompteurListener {
     @Override
     public void onPlus(Compteur compteur) {
         Log.d("Activity compteur","Plus");
-        compteur.nombre++;
-        Log.d("Activity compteur",String.valueOf(compteur.nombre));
+        compteur.increment();
+        Log.d("Activity compteur",String.valueOf(compteur.getNombre()));
     }
 
     @Override
     public void onMoins(Compteur compteur) {
         Log.d("Activity compteur","Moins");
-        if(compteur.nombre>0)
-            compteur.nombre--;
+        if(compteur.getNombre()>0)
+            compteur.decrement();
         else
             Toast.makeText(this,"Can't go under 0",Toast.LENGTH_LONG).show();
-        Log.d("Activity compteur",String.valueOf(compteur.nombre));
+        Log.d("Activity compteur",String.valueOf(compteur.getNombre()));
     }
 }
