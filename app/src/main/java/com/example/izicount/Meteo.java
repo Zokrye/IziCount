@@ -44,7 +44,6 @@ import androidx.annotation.NonNull;
 
 public class Meteo extends Activity {
     EditText cityText;
-    TextView responseView;
     //ProgressBar progressBar;
     ListView mListView;
     private LocationManager locationManager;
@@ -102,7 +101,7 @@ public class Meteo extends Activity {
 
         Double latitude=null;
         Double longitude=null;
-        responseView = (TextView) findViewById(R.id.responseView);
+
         cityText = (EditText) findViewById(R.id.cityText);
         //progressBar = (ProgressBar) findViewById(R.id.progressBar);
         ImageView locationImage = (ImageView) findViewById(R.id.location);
@@ -179,7 +178,6 @@ public class Meteo extends Activity {
 
         protected void onPreExecute() {
             //progressBar.setVisibility(View.VISIBLE);
-            //responseView.setText("");
         }
 
         protected String doInBackground(Void... urls) {
@@ -239,7 +237,6 @@ public class Meteo extends Activity {
                 Log.e("MYAPP", "Exception", e);
             }
             //progressBar.setVisibility(View.GONE);
-            //responseView.setText("Found");
             return response;
         }
 
@@ -259,7 +256,6 @@ public class Meteo extends Activity {
 
         protected void onPreExecute() {
             //progressBar.setVisibility(View.VISIBLE);
-            //responseView.setText("");
         }
 
         protected String doInBackground(Double... coordinates) {
@@ -315,7 +311,6 @@ public class Meteo extends Activity {
         protected void onPostExecute(String response) {
 
             new LoadWeathers().execute();
-            responseView.setText("Found");
             //progressBar.setVisibility(View.GONE);
         }
     }
@@ -325,7 +320,6 @@ public class Meteo extends Activity {
 
         protected void onPreExecute() {
             //progressBar.setVisibility(View.VISIBLE);
-            //responseView.setText("");
         }
 
         protected List<Weather> doInBackground(Void... param) {

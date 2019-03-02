@@ -94,7 +94,6 @@ public class WeatherAdapter extends ArrayAdapter<Weather> {
 
         protected void onPreExecute() {
             //progressBar.setVisibility(View.VISIBLE);
-            //responseView.setText("");
         }
 
         protected Void doInBackground(String... place) {
@@ -118,7 +117,6 @@ public class WeatherAdapter extends ArrayAdapter<Weather> {
 
         protected void onPreExecute() {
             //progressBar.setVisibility(View.VISIBLE);
-            //responseView.setText("");
         }
 
         protected Weather doInBackground(String... place) {
@@ -172,7 +170,6 @@ public class WeatherAdapter extends ArrayAdapter<Weather> {
             }
             //progressBar.setVisibility(View.GONE);
             Log.i("INFO", response);
-            //responseView.setText(response);
             return new_weather;
         }
 
