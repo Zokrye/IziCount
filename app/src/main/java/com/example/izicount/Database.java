@@ -17,7 +17,8 @@ import com.example.izicount.tables.Weather;
 
 import androidx.room.RoomDatabase;
 
-@androidx.room.Database(entities={Weather.class, Transport.class, Restauration.class, Loisir.class, Lieux_visites.class, Hebergement.class, Autre.class}, version=1)
+@androidx.room.Database(entities={Weather.class, Transport.class, Restauration.class, Loisir.class, Lieux_visites.class, Hebergement.class, Autre.class},
+        version=1, exportSchema = false)
 public abstract class Database extends RoomDatabase {
     public abstract Hebergement_DAOs hebergementDAO();
     public abstract Lieux_visites_DAOs lieuDAO();
@@ -26,5 +27,4 @@ public abstract class Database extends RoomDatabase {
     public abstract Transport_DAOs transportDAO();
     public abstract Meteo_DAOs weatherDAO();
     public abstract AutreDao autreDAO();
-
 }

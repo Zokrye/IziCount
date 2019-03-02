@@ -220,13 +220,10 @@ public class Meteo extends Activity {
                 String tempk=((JSONObject) json.get("main")).get("temp").toString();
                 String tempc=new DecimalFormat("#.0").format(Double.parseDouble(tempk)- 273.15);
 
-
                 Log.d("tag", icon);
                 Weather meteo=new Weather(city+","+country,weather+","+tempc+"°C",icon);
                 //adapter.add(meteo);
                 DatabaseHelper.getInstance().getMeteoDAO().AddWeather(meteo);
-
-
 
             }
             catch(ParseException e) {

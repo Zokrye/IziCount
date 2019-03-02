@@ -1,12 +1,16 @@
 package com.example.izicount.DAOs;
 
+import com.example.izicount.pojo.Compteur;
 import com.example.izicount.tables.Loisir;
 
 import java.util.List;
 
 import androidx.room.Dao;
 import androidx.room.Delete;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+import androidx.room.Update;
+
 @Dao
 public interface Loisir_DAOs {
     @Query("SELECT * FROM Loisir ")//Renvoie une liste de Loisir (toutes les entrées dans la BDD)
@@ -22,6 +26,9 @@ public interface Loisir_DAOs {
 
     @Query("SELECT * FROM Loisir WHERE loisir_id LIKE:id LIMIT 1")
     Loisir findById(int id);
+
+    @Update(onConflict = OnConflictStrategy.IGNORE)
+    void update(Loisir loisir);
 
     @Delete
     void delete(Loisir loisir);

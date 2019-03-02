@@ -3,7 +3,6 @@ package com.example.izicount.DAOs;
 import com.example.izicount.tables.Autre;
 
 import java.util.List;
-
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.OnConflictStrategy;
