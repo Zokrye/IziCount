@@ -1,66 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <LinearLayout
+    <EditText
+        android:id="@+id/cityText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Entrez Ville"
+        android:inputType="textEmailAddress"
+        app:layout_constraintEnd_toStartOf="@+id/location"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/location"
+        android:layout_width="52dp"
+        android:layout_height="46dp"
+        android:src="@drawable/location"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/queryButton"
+        style="@style/Base.Widget.AppCompat.Button.Borderless"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginTop="46dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:text="Search"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ListView
+        android:id="@+id/listview"
         android:layout_width="match_parent"
-        android:layout_height="211dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="0dp"
-
-        android:layout_marginBottom="0dp"
-        android:orientation="vertical">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="46dp"
-            android:orientation="horizontal">
-
-            <EditText
-                android:id="@+id/cityText"
-                android:layout_width="255dp"
-                android:layout_height="wrap_content"
-                android:hint="Entrez Ville"
-                android:inputType="textEmailAddress" />
-
-            <ImageView
-                android:id="@+id/location"
-                android:layout_width="52dp"
-                android:layout_height="46dp"
-                android:src="@drawable/location" />
-        </LinearLayout>
-
-        <Button
-            android:id="@+id/queryButton"
-            style="@style/Base.Widget.AppCompat.Button.Borderless"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:text="Search" />
-
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="112dp">
-
-            <TextView
-                android:id="@+id/responseView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </ScrollView>
-
-        <ListView
-            android:id="@+id/listview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-    </LinearLayout>
+        android:layout_height="700dp"
+        app:layout_constraintTop_toBottomOf="@+id/queryButton" />
 
 
-
-
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -14,11 +14,11 @@ public interface Lieux_visites_DAOs {
     List<Lieux_visites> getAll();
 
     //Renvoie une liste de autre correspondant à la liste d'id en para
-    @Query("SELECT * FROM `Lieux visités` WHERE type_lieux IN (:autreIds)")
+    @Query("SELECT * FROM `Lieux visités` WHERE type_comptable IN (:autreIds)")
     List<Lieux_visites> loadsByIds(int[] autreIds);
 
     //Renvoie une instance de Lieux_visités correspondant au type de lieu passé en paramètre
-    @Query("SELECT * FROM `Lieux visités` WHERE type_lieux LIKE:type LIMIT 1")
+    @Query("SELECT * FROM `Lieux visités` WHERE type_comptable LIKE:type LIMIT 1")
     Lieux_visites findByType(String type);
 
     //Renvoie une instance de Lieux_visités correspondant à l'id passé en paramètre
