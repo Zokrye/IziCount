@@ -10,7 +10,7 @@ public class ViewHolder {
     public Button moins;
     public Button plus;
 
-    public ViewHolder (View view){
+    public ViewHolder (View view){//Initialisation de la vue d'un compteur
         name = (TextView) view.findViewById(R.id.nomCompteur);
         count = (TextView) view.findViewById(R.id.nbcount);
         moins = (Button) view.findViewById(R.id.moins);

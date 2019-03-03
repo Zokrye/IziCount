@@ -9,11 +9,7 @@ import android.widget.BaseAdapter;
 import com.example.izicount.interfaces.CompteurListener;
 import com.example.izicount.pojo.Compteur;
 
-import org.w3c.dom.Text;
-
 import java.util.List;
-
-import androidx.recyclerview.widget.RecyclerView;
 
 public class CompteursAdapter extends BaseAdapter implements View.OnClickListener  {
     List<Compteur> mCompteurs;
@@ -64,6 +60,7 @@ public class CompteursAdapter extends BaseAdapter implements View.OnClickListene
             holder.name.setOnClickListener(this);
             holder.count.setText(String.valueOf(compteur.getNombre()));
             holder.moins.setTag(position);
+            //Action bouton moins d'un compteur
             holder.moins.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -77,6 +74,7 @@ public class CompteursAdapter extends BaseAdapter implements View.OnClickListene
                 }
             });
             holder.plus.setTag(position);
+            //Action bouton plus d'un compteur
             holder.plus.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -99,8 +97,6 @@ public class CompteursAdapter extends BaseAdapter implements View.OnClickListene
         if(null != mListener){
             final Compteur compteur = (Compteur) getItem(position);
             Log.d("Clicked Button", compteur.getNom());
-            //mListener.onRetweet(tweet);
-            //mListener.onViewTweet(tweet);
         }
     }
 }

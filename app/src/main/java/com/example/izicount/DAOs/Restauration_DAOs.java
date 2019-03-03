@@ -1,7 +1,8 @@
 package com.example.izicount.DAOs;
 
-import com.example.izicount.tables.Lieux_visites;
+import com.example.izicount.pojo.Compteur;
 import com.example.izicount.tables.Restauration;
+import com.example.izicount.tables.Transport;
 
 import java.util.List;
 
@@ -14,9 +15,6 @@ import androidx.room.Update;
 
 @Dao
 public interface Restauration_DAOs {
-
-    @Insert//Insère un objet restau dans la bdd Restauration
-    public void insertRestau(Restauration restauration);
 
     //Renvoie tout le contenu de la bdd Restauration
     @Query("SELECT * FROM Restauration ")
@@ -33,8 +31,26 @@ public interface Restauration_DAOs {
     @Query("SELECT * FROM Restauration WHERE restau_id LIKE:id LIMIT 1")
     Restauration findById(int id);
 
-    @Update(onConflict = OnConflictStrategy.IGNORE)
-    void update(Restauration restauration);
+    //Renvoie tous les compteurs de Restauration
+    @Query("SELECT  compteur_id, nom ,nombre FROM Restauration")
+    List<Compteur> getCompteurOfRestauration();
+
+    @Query("SELECT COUNT(*) FROM Restauration")
+    boolean RestaurationIsEmpty();
+
+    @Query("SELECT compteur_id,nom,nombre FROM Restauration where compteur_id LIKE:id_compteur_cherche LIMIT 1")
+    Compteur findCompteurDeRestauration(int id_compteur_cherche);
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    void insertRestauration(Restauration restauration);
+
+
+    @Query("UPDATE Restauration SET nombre = nombre+1")
+    void updateCompteurDeRestauration();
+
+    @Query("UPDATE Restauration SET nombre = nombre-1")
+    void downDateCompteurDeRestauration();
+
     @Delete
     void delete(Restauration restauration);
 }

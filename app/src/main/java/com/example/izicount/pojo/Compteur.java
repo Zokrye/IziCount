@@ -1,19 +1,35 @@
 package com.example.izicount.pojo;
 
-public class Compteur {
+
+public class Compteur  {
+
+    private int compteur_id; //sert pour la BDD
+
     private String nom;
+
     private int nombre;
+
     public Compteur(){
-        setNombre(0);
+        this.setNombre(new Integer(0));
+        this.setNom(new String("Compteur sans nom"));
+        this.setCompteur_id(new Integer(0));
     }
     public Compteur(String name){
-        setNom(name);
-        setNombre(0);
+        setNom(new String(name));
+        setNombre(new Integer(0));
+        this.setCompteur_id(0);
     }
 
-    public Compteur(int nombre,String name){
+    public Compteur(String name,int id){
+        this.setNombre(new Integer(0));
+        this.setCompteur_id(new Integer(id));
+        this.setNom(new String(name));
+    }
+
+    public Compteur(int id, String name, int nombre){
         this.setNombre(new Integer(nombre));
         this.setNom(new String(name));
+        this.setCompteur_id(new Integer(id));
     }
 
     public String getNom() {
@@ -38,5 +54,13 @@ public class Compteur {
 
     public void decrement(){
         this.nombre--;
+    }
+
+    public int getCompteur_id() {
+        return compteur_id;
+    }
+
+    public void setCompteur_id(int compteur_id) {
+        this.compteur_id = compteur_id;
     }
 }

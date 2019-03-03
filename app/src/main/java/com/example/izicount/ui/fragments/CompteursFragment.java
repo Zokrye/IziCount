@@ -26,12 +26,12 @@ public class CompteursFragment extends Fragment implements CompteursLoad {
     private RetrieveCompteursAsyncTask task;
     private CompteurListener mListener;
     private ListView mListView;
-    private String mTheme;
+    private String mTheme;//Thème des compteurs choisi
     public CompteursFragment(){
 
     }
 
-    public static CompteursFragment newinstance(String theme){
+    public static CompteursFragment newinstance(String theme){ //permet de passer le thème du compteur entre l'activité et le fragment
         final CompteursFragment compteursFragment = new CompteursFragment();
         final Bundle arguments = new Bundle();
         arguments.putString("theme",theme);
@@ -43,8 +43,10 @@ public class CompteursFragment extends Fragment implements CompteursLoad {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View RootView = inflater.inflate(R.layout.compteurs_fragment, container, false);
         //if (getArguments().getParcelable("theme") != null)
-        if (getArguments().getString("theme") != null)
+        if (getArguments().getString("theme") != null){
+            //On récupère le thème des compteurs à afficher
             mTheme = getArguments().getString("theme");
+        }
         Log.d("Fragment", "Theme received :"+ mTheme);
         mListView= (ListView) RootView.findViewById(R.id.compteursList);
         mListView.setAdapter(
@@ -60,7 +62,7 @@ public class CompteursFragment extends Fragment implements CompteursLoad {
         if(mTheme!=null) {
             task.execute(mTheme);
         }
-        //aller chercher les compteurs dans la bdd à afficher pour le thème choisi
+        //on va chercher les compteurs dans la bdd à afficher pour le thème choisi
     }
 
     @Override

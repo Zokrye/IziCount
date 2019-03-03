@@ -2,7 +2,6 @@ package com.example.izicount;
 
 import android.app.Application;
 import android.content.Context;
-import android.widget.Button;
 
 public class IziCountApplication extends Application {
 

@@ -16,32 +16,34 @@ public class ThemesCompteur extends AppCompatActivity {
         Button lieux = findViewById(R.id.lieux_visited);
         Button hebergement = findViewById(R.id.hebergement);
         Button restauration = findViewById(R.id.restauration);
+        //Préparation démarrage activité
         final Intent intent = new Intent(ThemesCompteur.this,CompteursActivity.class);
+        //Choix du thème de compteurs à afficher
         lieux.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                intent.putExtra("theme","lieux");
+                intent.putExtra("theme","Lieux visités");
                 startActivity(intent);
             }
         });
         hebergement.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                intent.putExtra("theme","hebergement");
+                intent.putExtra("theme","Hébergement");
                 startActivity(intent);
             }
         });
         restauration.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                intent.putExtra("theme","restauration");
+                intent.putExtra("theme","Restauration");
                 startActivity(intent);
             }
         });
     }
 
     @Override
-    public void onBackPressed() {
+    public void onBackPressed() {//Lors de l'appui sur retour on repasse sur la première activité
         super.onBackPressed();
         Intent intent = new Intent(ThemesCompteur.this,MainActivity.class);
         startActivity(intent);

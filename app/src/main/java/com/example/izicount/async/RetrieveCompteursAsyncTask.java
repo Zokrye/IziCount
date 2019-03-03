@@ -3,10 +3,14 @@ package com.example.izicount.async;
 import android.os.AsyncTask;
 
 import com.example.izicount.interfaces.CompteursLoad;
+import com.example.izicount.pojo.Comptable;
 import com.example.izicount.pojo.Compteur;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.lang.String;
+
+import androidx.room.Database;
 
 public class RetrieveCompteursAsyncTask extends AsyncTask<String,Void, List<Compteur>> {
 
@@ -20,7 +24,9 @@ public class RetrieveCompteursAsyncTask extends AsyncTask<String,Void, List<Comp
     @Override
     protected List<Compteur> doInBackground(String... theme) {
 
+
         if((null!=theme) && (theme.length>0))
+            //Sans BDD on crée une liste de compteurs avec la fonction getFakeCompteurs
             return getFakeCompteurs();
 
         return null;
@@ -33,14 +39,6 @@ public class RetrieveCompteursAsyncTask extends AsyncTask<String,Void, List<Comp
             compteur.setNom("Numero "+ i);
             compteurs.add(compteur);
         }
-        //BDD ajout de la liste compteur
-        /*int i=1;
-        while(i<getSizeTable()){
-            final Compteur compteur = new Compteur();
-            compteur.nom="Get id pour le nom";
-            compteur.nombre=1;
-            i++;
-        }*/
         return compteurs;
     }
 

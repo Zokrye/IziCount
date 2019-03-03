@@ -23,7 +23,7 @@ public class Comptable {
 
     public Comptable(){
         this.type_comptable = new String(" ");
-        this.compteur_comptable = new Compteur(0," ");
+        this.compteur_comptable = new Compteur(" ",1);
     }
 
     public Comptable(String type,Compteur compteur){

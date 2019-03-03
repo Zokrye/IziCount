@@ -7,6 +7,7 @@ import java.util.List;
 
 import androidx.room.Dao;
 import androidx.room.Delete;
+import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
@@ -28,8 +29,26 @@ public interface Transport_DAOs {
     @Query("SELECT * FROM Transport WHERE transport_id LIKE:id LIMIT 1")
     Transport findById(int id);
 
-    @Update(onConflict = OnConflictStrategy.IGNORE)
-    void update(Transport transport);
+    //Renvoie tous les compteurs de Transport
+    @Query("SELECT  compteur_id, nom ,nombre FROM Transport")
+    List<Compteur> getCompteurOfTransport();
+
+    @Query("SELECT COUNT(*) FROM Transport")
+    boolean TransportIsEmpty();
+
+    @Query("SELECT compteur_id,nom,nombre FROM Transport where compteur_id LIKE:id_compteur_cherche LIMIT 1")
+    Compteur findCompteurDeTransport(int id_compteur_cherche);
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    void insertTransport(Transport transport);
+
+    @Query("UPDATE Transport SET nombre = nombre+1")
+    void updateCompteurDeTransport();
+
+    @Query("UPDATE Transport SET nombre = nombre-1")
+    void downDateCompteurDeTransport();
+
+
     @Delete
     void delete(Transport transport);
 }

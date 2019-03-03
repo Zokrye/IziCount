@@ -2,7 +2,6 @@ package com.example.izicount;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -42,7 +41,7 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 
-public class Meteo extends Activity {
+public class Meteo extends AppCompatActivity {
     EditText cityText;
     //ProgressBar progressBar;
     ListView mListView;
@@ -70,14 +69,14 @@ public class Meteo extends Activity {
             @Override
             public void onLocationChanged(Location location) {
                 Log.v("app", "IN ON LOCATION CHANGE)");
-                    if(location!=null) {
-                        locationManager.removeUpdates(this);
-                        Toast.makeText(Meteo.this, location.getLatitude() + " " + location.getLongitude(), Toast.LENGTH_LONG).show();
-                        Log.d("app",location.getLatitude() + " " + location.getLongitude());
-                        new RetrieveWeatherByCoordinates().execute(location.getLongitude(),location.getLatitude());
-                        locationManager.removeUpdates(this);
+                if(location!=null) {
+                    locationManager.removeUpdates(this);
+                    Toast.makeText(Meteo.this, location.getLatitude() + " " + location.getLongitude(), Toast.LENGTH_LONG).show();
+                    Log.d("app",location.getLatitude() + " " + location.getLongitude());
+                    new RetrieveWeatherByCoordinates().execute(location.getLongitude(),location.getLatitude());
+                    locationManager.removeUpdates(this);
 
-                    }
+                }
                 //Toast.makeText(Meteo.this, "nope", 10000).show();
             }
 
@@ -336,5 +335,3 @@ public class Meteo extends Activity {
 
     }
 }
-
-

@@ -1,7 +1,5 @@
 package com.example.izicount;
 
-import android.app.Application;
-
 import com.example.izicount.DAOs.AutreDao;
 import com.example.izicount.DAOs.Hebergement_DAOs;
 import com.example.izicount.DAOs.Lieux_visites_DAOs;
@@ -9,10 +7,6 @@ import com.example.izicount.DAOs.Loisir_DAOs;
 import com.example.izicount.DAOs.Meteo_DAOs;
 import com.example.izicount.DAOs.Restauration_DAOs;
 import com.example.izicount.DAOs.Transport_DAOs;
-import com.example.izicount.tables.Autre;
-import com.example.izicount.tables.Hebergement;
-import com.example.izicount.tables.Loisir;
-import com.example.izicount.tables.Restauration;
 
 import androidx.room.Room;
 
@@ -50,3 +44,4 @@ public class DatabaseHelper {
         db= Room.databaseBuilder(IziCountApplication.getContext(),Database.class,"meteo.db").build();
     }
 }
+
